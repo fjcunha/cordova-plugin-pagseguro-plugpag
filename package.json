@@ -1,0 +1,17 @@
+{
+  "name": "PlugPag",
+  "version": "1.0.0",
+  "description": "Plugin to interact with pagseguro devices.",
+  "cordova": {
+    "id": "com.fjti.plugpag",
+    "platforms": [
+      "android"
+    ]
+  },
+  "keywords": [
+    "ecosystem:cordova",
+    "cordova-android"
+  ],
+  "author": "Fabricio Junio",
+  "license": "MIT"
+}

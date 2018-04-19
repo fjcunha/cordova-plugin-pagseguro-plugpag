@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='utf-8'?>
+<plugin id="com.fjti.plugpag" version="1.0.0" 
+    xmlns="http://apache.org/cordova/ns/plugins/1.0" 
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <name>PlugPag</name>
+    <description>Plugin to interact with pagseguro devices.</description>
+    <keywords>cordova,plugpag,pagseguro,minizinha,leitores,terminais</keywords>
+    
+    <js-module name="PlugPag" src="www/PlugPag.js">
+        <clobbers target="cordova.plugins.PlugPag" />
+    </js-module>
+
+    <platform name="android">
+        <config-file parent="/*" target="res/xml/config.xml">
+            <feature name="PlugPag">
+                <param name="android-package" value="com.fjti.plugpag.PlugPag" />
+            </feature>
+        </config-file>
+
+        <config-file parent="/*" target="AndroidManifest.xml">
+            <uses-permission android:name="android.permission.INTERNET"/>
+            <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+            <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+            <uses-permission android:name="android.permission.BLUETOOTH"/>
+            <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+            <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+            <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+        </config-file>
+        
+        <source-file src="src/android/PlugPag.java" target-dir="src/com/fjti/plugpag/PlugPag" />
+
+        <framework custom="true" src="src/android/build.gradle" type="gradleReference" />
+    </platform>
+</plugin>
