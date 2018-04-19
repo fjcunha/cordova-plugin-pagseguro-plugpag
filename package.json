@@ -8,10 +8,24 @@
       "android"
     ]
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fjcunha/cordova-plugin-pagseguro-plugpag.git"
+  },
   "keywords": [
+    "cordova",
+    "plugpag",
+    "pagseguro",
+    "minizinha",
+    "leitores",
+    "terminais",
     "ecosystem:cordova",
     "cordova-android"
   ],
-  "author": "Fabricio Junio",
-  "license": "MIT"
+  "author": "Fabrício Júnio",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/fjcunha/cordova-plugin-pagseguro-plugpag/issues"
+  },
+  "homepage": "https://github.com/fjcunha/cordova-plugin-pagseguro-plugpag#readme"
 }
