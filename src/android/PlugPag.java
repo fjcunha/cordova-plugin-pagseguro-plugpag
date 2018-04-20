@@ -169,7 +169,7 @@ public class PlugPag extends CordovaPlugin {
             amount,
             InstallmentType,
             installments,
-            SaleRef);
+            "CODVENDA");
     // Cria a identificação do aplicativo
     PlugPagAppIdentification appIdentification = new PlugPagAppIdentification("Quero2Business","0.0.1");
     // Cria a referência do PlugPag
