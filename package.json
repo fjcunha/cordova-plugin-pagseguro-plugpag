@@ -1,9 +1,9 @@
 {
-  "name": "PlugPag",
+  "name": "cordova-plugin-pagseguro-plugpag",
   "version": "1.0.0",
   "description": "Plugin to interact with pagseguro devices.",
   "cordova": {
-    "id": "com.fjti.plugpag",
+    "id": "cordova-plugin-pagseguro-plugpag",
     "platforms": [
       "android"
     ]

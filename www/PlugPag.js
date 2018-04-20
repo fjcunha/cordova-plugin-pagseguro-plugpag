@@ -34,7 +34,7 @@ var methods = {
      * */
     startPayment:function(paymentInfo,success,error){
         // console.log('show authentication activity');
-        exec(success, error, 'PlugPag', 'startPayment', [deviceIdentification]);
+        exec(success, error, 'PlugPag', 'startPayment', [paymentInfo]);
     }
 }
 

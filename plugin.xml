@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
-<plugin id="com.fjti.plugpag" version="1.0.0" 
+<plugin id="cordova-plugin-pagseguro-plugpag" version="1.0.0" 
     xmlns="http://apache.org/cordova/ns/plugins/1.0" 
     xmlns:android="http://schemas.android.com/apk/res/android">
-    <name>PlugPag</name>
+    <name>cordova-plugin-pagseguro-plugpag</name>
     <description>Plugin to interact with pagseguro devices.</description>
     <keywords>cordova,plugpag,pagseguro,minizinha,leitores,terminais</keywords>
     
