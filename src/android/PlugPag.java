@@ -59,7 +59,7 @@ public class PlugPag extends CordovaPlugin {
           JSONObject paymentInfo =  args.getJSONObject(0);
 
           this.startPayment(paymentInfo.getString("deviceIdentification"),
-            paymentInfo.getInt("PaymentType "),
+            paymentInfo.getInt("PaymentType"),
             paymentInfo.getInt("InstallmentType"),
             paymentInfo.getString("SaleRef"),
             paymentInfo.getInt("installments"),
