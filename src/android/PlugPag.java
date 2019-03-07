@@ -3,9 +3,13 @@ package com.fjti.plugpag;
 import android.app.Activity;
 import android.content.Context;
 import android.telecom.Call;
+import android.util.Log;
+
+import com.google.gson.Gson;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
+import org.apache.cordova.PluginResult;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -13,6 +17,8 @@ import org.json.JSONObject;
 import br.com.uol.pagseguro.plugpag.DeviceInfo;
 import br.com.uol.pagseguro.plugpag.PlugPagAppIdentification;
 import br.com.uol.pagseguro.plugpag.PlugPagDevice;
+import br.com.uol.pagseguro.plugpag.PlugPagEventData;
+import br.com.uol.pagseguro.plugpag.PlugPagEventListener;
 import br.com.uol.pagseguro.plugpag.PlugPagPaymentData;
 import br.com.uol.pagseguro.plugpag.PlugPagTransactionResult;
 
@@ -24,11 +30,6 @@ public class PlugPag extends CordovaPlugin {
 
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
-        if (action.equals("coolMethod")) {
-            String message = args.getString(0);
-            this.coolMethod(message, callbackContext);
-            return true;
-        }
 
         if(action.equals("getDeviceInfos")){
             this.InitDeviceInfo(callbackContext);
@@ -68,6 +69,12 @@ public class PlugPag extends CordovaPlugin {
           return true;
         }
 
+        if(action.equals("initBTConnection")){
+          String deviceId = args.getString(0);
+          this.initBTConnection(deviceId,callbackContext);
+          return true;
+        }
+
 
         return false;
     }
@@ -95,7 +102,7 @@ public class PlugPag extends CordovaPlugin {
   private void GetLibVersion(final CallbackContext callbackContext){
       Context context = this.cordova.getActivity().getApplicationContext();
     // Cria a identificação do aplicativo
-      PlugPagAppIdentification appIdentification = new PlugPagAppIdentification("Quero2Business","0.0.1");
+      PlugPagAppIdentification appIdentification = new PlugPagAppIdentification("Application","0.0.1");
 
     // Cria a referência do PlugPag
         br.com.uol.pagseguro.plugpag.PlugPag plugpag = new br.com.uol.pagseguro.plugpag.PlugPag(context,appIdentification);
@@ -108,7 +115,7 @@ public class PlugPag extends CordovaPlugin {
   public void CheckAuthentication(final CallbackContext callbackContext) throws JSONException {
     Context context = this.cordova.getActivity().getApplicationContext();
     // Cria a identificação do aplicativo
-    PlugPagAppIdentification appIdentification = new PlugPagAppIdentification("Quero2Business","0.0.1");
+    PlugPagAppIdentification appIdentification = new PlugPagAppIdentification("Application","0.0.1");
 
     // Cria a referência do PlugPag
     br.com.uol.pagseguro.plugpag.PlugPag plugpag = new br.com.uol.pagseguro.plugpag.PlugPag(context,appIdentification);
@@ -122,7 +129,7 @@ public class PlugPag extends CordovaPlugin {
   public void InvalidateAuthentication(final CallbackContext callbackContext) {
     Context context = this.cordova.getActivity().getApplicationContext();
     // Cria a identificação do aplicativo
-    PlugPagAppIdentification appIdentification = new PlugPagAppIdentification("Quero2Business","0.0.1");
+    PlugPagAppIdentification appIdentification = new PlugPagAppIdentification("Application","0.0.1");
 
     // Cria a referência do PlugPag
     br.com.uol.pagseguro.plugpag.PlugPag plugpag = new br.com.uol.pagseguro.plugpag.PlugPag(context,appIdentification);
@@ -140,7 +147,7 @@ public class PlugPag extends CordovaPlugin {
     Activity activity = this.cordova.getActivity();
 
     // Cria a identificação do aplicativo
-    PlugPagAppIdentification appIdentification = new PlugPagAppIdentification("Quero2Business","0.0.1");
+    PlugPagAppIdentification appIdentification = new PlugPagAppIdentification("Application","0.0.1");
 
     // Cria a referência do PlugPag
     br.com.uol.pagseguro.plugpag.PlugPag plugpag = new br.com.uol.pagseguro.plugpag.PlugPag(context,appIdentification);
@@ -151,6 +158,25 @@ public class PlugPag extends CordovaPlugin {
     }catch (Exception ex){
       callbackContext.error(ex.getMessage());
     }
+  }
+
+  /** Method to test the device connection
+   * @param deviceIdentification Nome ou MAC address do dispositivo pagseguro
+   * */
+  public void initBTConnection(String deviceIdentification,CallbackContext callbackContext) throws JSONException {
+      Context context = this.cordova.getActivity().getApplicationContext();
+      PlugPagDevice device = new PlugPagDevice(deviceIdentification);
+      // Cria a identificação do aplicativo
+      PlugPagAppIdentification appIdentification = new PlugPagAppIdentification("Application","0.0.1");
+      // Cria a referência do PlugPag
+      br.com.uol.pagseguro.plugpag.PlugPag plugpag = new br.com.uol.pagseguro.plugpag.PlugPag(context, appIdentification);
+      PlugPagTransactionResult initResult = plugpag.initBTConnection(device);
+
+      JSONObject result = new JSONObject();
+      result.put("Message",initResult.getMessage());
+      result.put("Result",initResult.getResult());
+
+      callbackContext.success(result);
   }
 
   /**
@@ -171,12 +197,13 @@ public class PlugPag extends CordovaPlugin {
             installments,
             "CODVENDA");
     // Cria a identificação do aplicativo
-    PlugPagAppIdentification appIdentification = new PlugPagAppIdentification("Quero2Business","0.0.1");
+    PlugPagAppIdentification appIdentification = new PlugPagAppIdentification("Application","0.0.1");
     // Cria a referência do PlugPag
         br.com.uol.pagseguro.plugpag.PlugPag plugpag = new br.com.uol.pagseguro.plugpag.PlugPag(context, appIdentification);
         // Prepara conexão bluetooth e faz o pagamento
         PlugPagTransactionResult initResult = plugpag.initBTConnection(device);
         if (initResult.getResult() == br.com.uol.pagseguro.plugpag.PlugPag.RET_OK) {
+
           PlugPagTransactionResult result = plugpag.doPayment(paymentData);
 
           JSONObject transactionResult = this.GetTransactionResultStr(result);
