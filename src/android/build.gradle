@@ -1,6 +1,6 @@
 dependencies {
 implementation 'com.android.support:design:27.1.0'
-implementation 'br.com.uol.pagseguro:plugpag:3.0.0'
+implementation 'br.com.uol.pagseguro:plugpag:3.0.3'
 implementation 'com.google.code.gson:gson:2.8.2'
 }
 

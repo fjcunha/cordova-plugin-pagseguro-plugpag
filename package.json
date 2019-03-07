@@ -1,6 +1,6 @@
 {
   "name": "cordova-plugin-pagseguro-plugpag",
-  "version": "1.0.0",
+  "version": "1.0.3-beta",
   "description": "Plugin to interact with pagseguro devices.",
   "cordova": {
     "id": "cordova-plugin-pagseguro-plugpag",
