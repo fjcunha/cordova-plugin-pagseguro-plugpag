@@ -16,6 +16,7 @@ import org.json.JSONObject;
 
 import br.com.uol.pagseguro.plugpag.DeviceInfo;
 import br.com.uol.pagseguro.plugpag.PlugPagAppIdentification;
+import br.com.uol.pagseguro.plugpag.PlugPagAuthenticationListener;
 import br.com.uol.pagseguro.plugpag.PlugPagDevice;
 import br.com.uol.pagseguro.plugpag.PlugPagEventData;
 import br.com.uol.pagseguro.plugpag.PlugPagEventListener;
@@ -153,8 +154,17 @@ public class PlugPag extends CordovaPlugin {
     br.com.uol.pagseguro.plugpag.PlugPag plugpag = new br.com.uol.pagseguro.plugpag.PlugPag(context,appIdentification);
     try{
       // Solicita autenticação
-      plugpag.requestAuthentication(activity);
-      callbackContext.success();
+      plugpag.requestAuthentication(new PlugPagAuthenticationListener() {
+        @Override
+        public void onSuccess() {
+          callbackContext.success();
+        }
+
+        @Override
+        public void onError() {
+          callbackContext.success();
+        }
+      });
     }catch (Exception ex){
       callbackContext.error(ex.getMessage());
     }
@@ -170,11 +180,11 @@ public class PlugPag extends CordovaPlugin {
       PlugPagAppIdentification appIdentification = new PlugPagAppIdentification("Application","0.0.1");
       // Cria a referência do PlugPag
       br.com.uol.pagseguro.plugpag.PlugPag plugpag = new br.com.uol.pagseguro.plugpag.PlugPag(context, appIdentification);
-      PlugPagTransactionResult initResult = plugpag.initBTConnection(device);
+      int initResult = plugpag.initBTConnection(device);
 
       JSONObject result = new JSONObject();
-      result.put("Message",initResult.getMessage());
-      result.put("Result",initResult.getResult());
+      result.put("Message",initResult);
+      result.put("Result",initResult);
 
       callbackContext.success(result);
   }
@@ -201,8 +211,8 @@ public class PlugPag extends CordovaPlugin {
     // Cria a referência do PlugPag
         br.com.uol.pagseguro.plugpag.PlugPag plugpag = new br.com.uol.pagseguro.plugpag.PlugPag(context, appIdentification);
         // Prepara conexão bluetooth e faz o pagamento
-        PlugPagTransactionResult initResult = plugpag.initBTConnection(device);
-        if (initResult.getResult() == br.com.uol.pagseguro.plugpag.PlugPag.RET_OK) {
+        int initResult = plugpag.initBTConnection(device);
+        if (initResult == br.com.uol.pagseguro.plugpag.PlugPag.RET_OK) {
 
           PlugPagTransactionResult result = plugpag.doPayment(paymentData);
 
