@@ -191,7 +191,7 @@ public class PlugPag extends CordovaPlugin {
 
   /**
    * @param deviceIdentification Nome ou MAC address do leitor/pinpad
-   * @param PaymentType Credito 1, Debito 2, Voucher 3
+   * @param PaymentType Credito 1, Debito 2, Voucher 3, Elo QRCode Débito 4, Pix 5, Elo QRCode Crédito 7
    * @param InstallmentType A_VISTA 1, PARC_VENDEDOR 2
    * */
   public void startPayment(String deviceIdentification, int PaymentType, int InstallmentType, String SaleRef, int installments, int amount , final CallbackContext callbackContext) throws JSONException {
@@ -205,7 +205,7 @@ public class PlugPag extends CordovaPlugin {
             amount,
             InstallmentType,
             installments,
-            "CODVENDA");
+            SaleRef);
     // Cria a identificação do aplicativo
     PlugPagAppIdentification appIdentification = new PlugPagAppIdentification("Application","0.0.1");
     // Cria a referência do PlugPag
